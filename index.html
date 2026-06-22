@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpectaEvent — Pusat Informasi Kegiatan Kampus ITK</title>
+
+  <!-- Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Local Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">SpectaEvent</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+        <li><a href="#events" class="nav-link" data-section="events">Event</a></li>
+        <li><a href="#venue" class="nav-link" data-section="venue">Venue</a></li>
+        <li><a href="#statistik" class="nav-link" data-section="statistik">Statistik</a></li>
+        <li><a href="#tentang" class="nav-link" data-section="tentang">Tentang</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="home">
+
+    <div class="swiper heroSwiper">
+      <div class="swiper-wrapper" id="heroSwiperWrapper"></div>
+
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-inner">
+
+      <!-- HERO TEXT -->
+      <div class="hero-content">
+        <div class="hero-badge">Institut Teknologi Kalimantan</div>
+
+        <h1 class="hero-title">
+          Satu Pintu untuk Seluruh<br />
+          <span class="hero-accent">Informasi Kegiatan Kampus</span>
+        </h1>
+
+        <p class="hero-sub">
+          Jangan lewatkan event yang bermanfaat dan pantau penggunaan ruangan kampus secara real-time.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#events" class="btn btn-primary">Lihat Event</a>
+          <a href="#venue" class="btn btn-outline">Cek Venue</a>
+        </div>
+
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+
+      <!-- COUNTDOWN -->
+      <div class="hero-visual">
+        <div class="countdown-card" id="countdownCard">
+
+          <div class="cd-label">Event Berikutnya</div>
+          <div class="cd-event" id="cdEventName">—</div>
+
+          <div class="cd-timer" id="cdTimer">
+            <div class="cd-unit"><span id="cdDays">00</span><small>Hari</small></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span id="cdHours">00</span><small>Jam</small></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span id="cdMins">00</span><small>Menit</small></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span id="cdSecs">00</span><small>Detik</small></div>
+          </div>
+
+          <div class="cd-meta" id="cdMeta"></div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EVENT TERDEKAT ================= -->
+  <section class="section" id="latest">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title">Event Terdekat</h2>
+        <p class="section-sub">Kegiatan yang akan segera berlangsung</p>
+      </div>
+
+      <div class="latest-grid" id="latestGrid"></div>
+
+    </div>
+  </section>
+
+  <!-- ================= EVENTS ================= -->
+  <section class="section" id="events">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title">Semua Event</h2>
+        <p class="section-sub">Temukan kegiatan yang sesuai minatmu</p>
+      </div>
+
+      <div class="filter-bar">
+
+        <div class="search-wrap">
+          <input type="text" id="searchInput" class="search-input" placeholder="Cari event…" />
+        </div>
+
+        <select id="filterKategori" class="filter-select">
+          <option value="semua">Semua Kategori</option>
+          <option value="Seminar">Seminar</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Lomba">Lomba</option>
+          <option value="Pelatihan">Pelatihan</option>
+          <option value="Organisasi">Organisasi</option>
+        </select>
+
+        <select id="filterStatus" class="filter-select">
+          <option value="semua">Semua Status</option>
+          <option value="Akan Datang">Akan Datang</option>
+          <option value="Berlangsung">Berlangsung</option>
+          <option value="Selesai">Selesai</option>
+        </select>
+
+      </div>
+
+      <div class="event-count" id="eventCount"></div>
+      <div class="events-grid" id="eventsGrid"></div>
+
+      <div class="empty-state hidden" id="emptyState">
+        <p>Tidak ada event yang cocok dengan filter kamu.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= VENUE ================= -->
+  <section class="section" id="venue">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title">Venue Occupancy</h2>
+        <p class="section-sub">Status penggunaan ruangan kampus</p>
+      </div>
+
+      <div class="analytics-grid" id="analyticsGrid"></div>
+
+      <div class="filter-bar">
+        <select id="filterGedung" class="filter-select">
+          <option value="semua">Semua Gedung</option>
+        </select>
+
+        <select id="filterStatusVenue" class="filter-select">
+          <option value="semua">Semua Status</option>
+          <option value="Kosong">Kosong</option>
+          <option value="Digunakan">Digunakan</option>
+        </select>
+      </div>
+
+      <div class="venues-grid" id="venuesGrid"></div>
+
+    </div>
+  </section>
+
+  <!-- ================= STATISTIK ================= -->
+  <section class="section" id="statistik">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title">Statistik</h2>
+        <p class="section-sub">Distribusi kegiatan berdasarkan kategori</p>
+      </div>
+
+      <div class="chart-layout">
+
+        <div class="chart-card">
+          <h3 class="chart-title">Event per Kategori</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <h3 class="chart-title">Komposisi Kategori</h3>
+          <canvas id="pieChart"></canvas>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= TENTANG ================= -->
+  <section class="section" id="tentang">
+    <div class="container">
+
+      <div class="tentang-wrap">
+
+        <div class="tentang-text">
+          <div class="section-badge">Tentang Platform</div>
+
+          <h2 class="section-title">SpectaEvent</h2>
+
+          <p>
+            SpectaEvent adalah platform agregator digital yang dirancang untuk menjadi pusat informasi kegiatan kampus ITK. Platform ini membantu mahasiswa, dosen, dan civitas akademika dalam menemukan event, memantau status ruangan, serta mendapatkan gambaran statistik kegiatan secara cepat dan efisien.
+          </p>
+
+          <ul class="feature-list">
+            <li>✦ Filter event real-time</li>
+            <li>✦ Monitoring venue</li>
+            <li>✦ Statistik kegiatan</li>
+            <li>✦ Countdown event</li>
+          </ul>
+        </div>
+
+        <div class="tentang-info">
+          <div class="info-card">
+            <div class="info-label">Mata Kuliah</div>
+            <div class="info-value">Pemrograman Terstruktur</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">Teknologi</div>
+            <div class="info-value">HTML · CSS · JS</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-label">By</div>
+            <div class="info-value">Kelompok 7</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-main">
+        <div class="footer-brand">
+          <span class="logo-icon">◈</span>
+          <span class="logo-text">SpectaEvent</span>
+        </div>
+
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#events">Event</a>
+          <a href="#venue">Venue</a>
+          <a href="#statistik">Statistik</a>
+          <a href="#tentang">Tentang</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 SpectaEvent</span>
+        <span>Vanilla JS Project</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
+
+<!-- Canvas untuk Chart.js -->
+<div class="chart-layout">
+  <div class="chart-card">
+    <h3 class="chart-title">Event per Kategori</h3>
+    <canvas id="barChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3 class="chart-title">Komposisi Kategori</h3>
+    <canvas id="pieChart"></canvas>
+  </div>
+</div>
